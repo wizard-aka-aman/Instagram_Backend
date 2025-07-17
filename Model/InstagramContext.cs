@@ -1,4 +1,5 @@
 ﻿
+using Instagram.Model.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace Instagram.Model
@@ -15,7 +16,9 @@ namespace Instagram.Model
         {
             base.OnModelCreating(builder);
         }
-         
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Posts> Posts { get; set; }
+
 
     }
 }
