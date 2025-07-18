@@ -21,8 +21,9 @@ namespace Instagram.Model.Tables
 
         public int UserId { get; set; } // foreign key to Users table
         public virtual Users? User { get; set; } // Navigation property to Users table
-        //public virtual ICollection<Comments>? Comments { get; set; } // Navigation property to Comments table
-        //public virtual ICollection<Likes>? Likes { get; set; } // Navigation property to Likes table 
+        public virtual ICollection<Likes> Likes { get; set; } = new List<Likes>();
+        public virtual ICollection<Comments> Comments { get; set; } = new List<Comments>(); 
+
 
     }
 }

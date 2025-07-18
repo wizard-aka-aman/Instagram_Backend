@@ -48,6 +48,91 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Instagram.Controllers.FollowerController",
+    "Method": "FollowUser",
+    "RelativePath": "Follower/follow",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.FollowDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.FollowerController",
+    "Method": "GetFollowers",
+    "RelativePath": "Follower/getfollower/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.FollowerController",
+    "Method": "GetFollowing",
+    "RelativePath": "Follower/getfollowing/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.FollowerController",
+    "Method": "IsFollowing",
+    "RelativePath": "Follower/isfollowing/{followerUsername}/{followingUsername}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "followerUsername",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "followingUsername",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.FollowerController",
+    "Method": "UnfollowUser",
+    "RelativePath": "Follower/unfollow",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.FollowDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Instagram.Controllers.PostsController",
     "Method": "GetAllPostsByUserNameAsync",
     "RelativePath": "Posts/{username}",
@@ -58,6 +143,22 @@
       {
         "Name": "username",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.PostsController",
+    "Method": "AddCommentByPostIdWithUserName",
+    "RelativePath": "Posts/comment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.CommentDtoWithPostId",
         "IsRequired": true
       }
     ],
@@ -85,6 +186,59 @@
         "Name": "imageFile",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.PostsController",
+    "Method": "LikePost",
+    "RelativePath": "Posts/like",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.LikeAndUnLikeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.PostsController",
+    "Method": "GetPostByIdWithUserNameAsync",
+    "RelativePath": "Posts/post/{postId}/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "postId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.PostsController",
+    "Method": "UnlikePost",
+    "RelativePath": "Posts/unlike",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.LikeAndUnLikeDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

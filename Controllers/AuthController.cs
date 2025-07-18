@@ -39,7 +39,7 @@ namespace Instagram.Controllers
                 FullName = user.FullName,
                 UserName = user.UserName,
                 UsersId = user.UsersId,
-                ProfilePicture = user.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(user.ProfilePicture) : null
+                ProfilePicture = user.ProfilePicture != null ?  Convert.ToBase64String(user.ProfilePicture) : null
             };
 
             var Claims = new List<Claim>

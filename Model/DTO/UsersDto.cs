@@ -23,6 +23,8 @@ namespace Instagram.Model.DTO
 
         public string? ProfilePicture { get; set; }
         public string? Gender { get; set; }
+        public int FollowersCount { get; set; } = 0;
+        public int FollowingCount { get; set; } = 0;
     }
 } 
  

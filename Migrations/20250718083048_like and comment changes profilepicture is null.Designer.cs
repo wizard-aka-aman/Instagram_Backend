@@ -4,6 +4,7 @@ using Instagram.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Instagram.Migrations
 {
     [DbContext(typeof(InstagramContext))]
-    partial class InstagramContextModelSnapshot : ModelSnapshot
+    [Migration("20250718083048_like and comment changes profilepicture is null")]
+    partial class likeandcommentchangesprofilepictureisnull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,30 +59,6 @@ namespace Instagram.Migrations
                     b.HasIndex("PostsPostId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Instagram.Model.Tables.Followers", b =>
-                {
-                    b.Property<int>("FollowerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FollowerId"));
-
-                    b.Property<DateTime>("FollowedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FollowerUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("FollowerId");
-
-                    b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("Instagram.Model.Tables.Likes", b =>
@@ -178,12 +157,6 @@ namespace Instagram.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FollowersCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowingCount")
-                        .HasColumnType("int");
 
                     b.Property<string>("FullName")
                         .IsRequired()

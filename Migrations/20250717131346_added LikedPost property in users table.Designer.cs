@@ -4,6 +4,7 @@ using Instagram.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Instagram.Migrations
 {
     [DbContext(typeof(InstagramContext))]
-    partial class InstagramContextModelSnapshot : ModelSnapshot
+    [Migration("20250717131346_added LikedPost property in users table")]
+    partial class addedLikedPostpropertyinuserstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,97 +24,6 @@ namespace Instagram.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Instagram.Model.Tables.Comments", b =>
-                {
-                    b.Property<int>("CommentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
-
-                    b.Property<string>("CommentText")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<DateTime>("CommentedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PostsPostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProfilePicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CommentId");
-
-                    b.HasIndex("PostsPostId");
-
-                    b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Instagram.Model.Tables.Followers", b =>
-                {
-                    b.Property<int>("FollowerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FollowerId"));
-
-                    b.Property<DateTime>("FollowedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FollowerUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("FollowerId");
-
-                    b.ToTable("Followers");
-                });
-
-            modelBuilder.Entity("Instagram.Model.Tables.Likes", b =>
-                {
-                    b.Property<int>("LikeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LikeId"));
-
-                    b.Property<DateTime>("LikedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PostsPostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProfilePicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LikeId");
-
-                    b.HasIndex("PostsPostId");
-
-                    b.ToTable("Likes");
-                });
 
             modelBuilder.Entity("Instagram.Model.Tables.Posts", b =>
                 {
@@ -179,18 +91,15 @@ namespace Instagram.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FollowersCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowingCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LikedPost")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
@@ -211,20 +120,6 @@ namespace Instagram.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Instagram.Model.Tables.Comments", b =>
-                {
-                    b.HasOne("Instagram.Model.Tables.Posts", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("PostsPostId");
-                });
-
-            modelBuilder.Entity("Instagram.Model.Tables.Likes", b =>
-                {
-                    b.HasOne("Instagram.Model.Tables.Posts", null)
-                        .WithMany("Likes")
-                        .HasForeignKey("PostsPostId");
-                });
-
             modelBuilder.Entity("Instagram.Model.Tables.Posts", b =>
                 {
                     b.HasOne("Instagram.Model.Tables.Users", "User")
@@ -234,13 +129,6 @@ namespace Instagram.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Instagram.Model.Tables.Posts", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Likes");
                 });
 #pragma warning restore 612, 618
         }

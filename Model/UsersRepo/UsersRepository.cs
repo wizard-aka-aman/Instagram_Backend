@@ -38,7 +38,7 @@ namespace Instagram.Model.UsersRepo
                     UserName = users.UserName,
                     UsersId = users.UsersId,
                     Gender = users.Gender,
-                    ProfilePicture = "data:image/png;base64," + dto.ProfilePicture
+                    ProfilePicture =    dto.ProfilePicture
                 };
                 return updatedUserDto;
             }
@@ -60,8 +60,11 @@ namespace Instagram.Model.UsersRepo
                     FullName = user.FullName,
                     UserName = user.UserName,
                     UsersId = user.UsersId,
-                    ProfilePicture = user.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(user.ProfilePicture) : null,
-                    Gender = user.Gender
+                    ProfilePicture = user.ProfilePicture != null ?  Convert.ToBase64String(user.ProfilePicture) : null,
+                    Gender = user.Gender,
+                    FollowersCount = user.FollowersCount,
+                    FollowingCount = user.FollowingCount
+                    
                 };
                 return userDto;
             }
@@ -86,7 +89,7 @@ namespace Instagram.Model.UsersRepo
                     FullName = user.FullName,
                     UserName = user.UserName,
                     UsersId = user.UsersId,
-                    ProfilePicture = user.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(user.ProfilePicture) : null,
+                    ProfilePicture = user.ProfilePicture != null ?Convert.ToBase64String(user.ProfilePicture) : null,
                     Gender = user.Gender
                 };
                 return true;

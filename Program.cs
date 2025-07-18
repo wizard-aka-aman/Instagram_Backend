@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Instagram.Model.UsersRepo;
 using Instagram.Model.PostsRepo;
+using Instagram.Model.FollowRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<Instagram.Model.InstagramContext>(options => optio
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 
 //JWT
 builder.Services.AddAuthentication(options =>
