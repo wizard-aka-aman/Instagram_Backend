@@ -74,5 +74,16 @@ namespace Instagram.Controllers
             }
             return Ok(removed);
         }
+        [HttpGet("getallusers")]
+        public async Task<List<DisplayUserFollower>> GetAllUsers()
+        {
+            return await _usersRepository.GetAllUsers();
+        }
+
+        [HttpGet("search")]
+        public async Task<List<DisplayUserFollower>> Search([FromQuery] string query)
+        {
+            return await _usersRepository.Search(query);
+        }
     }
 }

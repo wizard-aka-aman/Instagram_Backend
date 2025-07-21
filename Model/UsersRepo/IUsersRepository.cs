@@ -8,6 +8,8 @@ namespace Instagram.Model.UsersRepo
         Task<UsersDto?> GetUserByUserName(string username);
         Task<UsersDto?> EditUsersByUserName(string username , UsersDto dto);
         Task<bool?> UpdateProfilePictureByUserName(string username, IFormFile filecollection);
-        Task<bool?> RemoveProfilePictureByUserName(string username); 
+        Task<bool?> RemoveProfilePictureByUserName(string username);
+        Task<List<DisplayUserFollower>> GetAllUsers();
+        Task<List<DisplayUserFollower>> Search(string username); 
     }
 }

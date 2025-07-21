@@ -24,6 +24,7 @@ namespace Instagram.Model
         public DbSet<Likes> Likes { get; set; }
         public DbSet<Comments> Comments{ get; set; }
         public DbSet<Followers> Followers { get; set; }
+        public DbSet<Saved> Saved { get; set; }
 
 
     }

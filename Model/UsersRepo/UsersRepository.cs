@@ -1,6 +1,5 @@
 ﻿using Instagram.Model.DTO;
-using Instagram.Model.Tables;
-using Microsoft.AspNetCore.Mvc;
+using Instagram.Model.Tables; 
 using Microsoft.EntityFrameworkCore;
 
 namespace Instagram.Model.UsersRepo
@@ -42,6 +41,24 @@ namespace Instagram.Model.UsersRepo
                 };
                 return updatedUserDto;
             }
+        }
+
+        public async Task<List<DisplayUserFollower>> GetAllUsers()
+        {
+            List<DisplayUserFollower> list = new List<DisplayUserFollower>();
+            var all = _context.Users.ToList();
+            foreach (var item in all)
+            {
+                DisplayUserFollower duf = new DisplayUserFollower
+                {
+                    FullName = item.FullName,
+                    ProfilePicture = item.ProfilePicture != null ? Convert.ToBase64String(item.ProfilePicture) : null,
+                    UserName = item.UserName,
+                };
+                list.Add(duf);
+            }
+            return list;
+
         }
 
         public async Task<UsersDto?> GetUserByUserName(string username)
@@ -94,6 +111,17 @@ namespace Instagram.Model.UsersRepo
                 };
                 return true;
             }
+        }
+
+        public async Task<List<DisplayUserFollower>> Search(string query)
+        {
+           var allusers = await GetAllUsers();
+            List<DisplayUserFollower> list = new List<DisplayUserFollower>();
+            foreach (var user in allusers) {
+                if(user.UserName.Contains(query))
+                list.Add(user);
+            }
+            return list;
         }
 
         public async Task<bool?> UpdateProfilePictureByUserName(string username, IFormFile filecollection)

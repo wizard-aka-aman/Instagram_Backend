@@ -79,7 +79,7 @@ namespace Instagram.Model.FollowRepo
 
             foreach (var user in users)
             {
-                Users findedUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+                Users findedUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == user.FollowerUserName);
                 if (findedUser != null)
                 {
                     DisplayUserFollower duf = new DisplayUserFollower()

@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Instagram.Model.UsersRepo;
 using Instagram.Model.PostsRepo;
 using Instagram.Model.FollowRepo;
+using Instagram.Model.SavedRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<Instagram.Model.InstagramContext>(options => optio
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
+builder.Services.AddScoped<ISavedRepository, SavedRepository>();
 
 //JWT
 builder.Services.AddAuthentication(options =>
