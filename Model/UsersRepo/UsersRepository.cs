@@ -115,10 +115,12 @@ namespace Instagram.Model.UsersRepo
 
         public async Task<List<DisplayUserFollower>> Search(string query)
         {
-           var allusers = await GetAllUsers();
+            query = query.ToLower();
+            var allusers = await GetAllUsers();
             List<DisplayUserFollower> list = new List<DisplayUserFollower>();
             foreach (var user in allusers) {
-                if(user.UserName.Contains(query))
+                var userName = user.UserName.ToLower(); 
+                if (userName.Contains(query))
                 list.Add(user);
             }
             return list;

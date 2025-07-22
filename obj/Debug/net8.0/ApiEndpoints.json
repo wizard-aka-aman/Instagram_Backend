@@ -48,6 +48,75 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Instagram.Controllers.ChatController",
+    "Method": "SaveMessage",
+    "RelativePath": "api/Chat",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "message",
+        "Type": "Instagram.Model.Chat.ChatMessage",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.ChatController",
+    "Method": "GetMessages",
+    "RelativePath": "api/Chat/{groupName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.ChatController",
+    "Method": "GetMessages",
+    "RelativePath": "api/Chat/{groupName}/{reciver}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupName",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "reciver",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.ChatController",
+    "Method": "AddReaction",
+    "RelativePath": "api/Chat/reaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.ReactionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Instagram.Controllers.FollowerController",
     "Method": "FollowUser",
     "RelativePath": "Follower/follow",

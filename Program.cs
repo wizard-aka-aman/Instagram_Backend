@@ -6,6 +6,7 @@ using Instagram.Model.UsersRepo;
 using Instagram.Model.PostsRepo;
 using Instagram.Model.FollowRepo;
 using Instagram.Model.SavedRepo;
+using Instagram.Model.Chat;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,9 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("InstagramConnection") ?? throw new InvalidOperationException("Connection string 'InstagramConnection' not found.");
 builder.Services.AddDbContext<Instagram.Model.InstagramContext>(options => options.UseSqlServer(connectionString));
 
+//SignalR
+
+builder.Services.AddSignalR();
 //services
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
@@ -80,7 +84,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
