@@ -3,6 +3,6 @@
     public class ReactionDto
     {
         public int messageid { get; set; }
-        public string reaction { get; set; }
+        public string? reaction { get; set; }
     }
 }

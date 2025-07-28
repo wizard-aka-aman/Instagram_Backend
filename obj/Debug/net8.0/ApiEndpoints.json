@@ -102,6 +102,22 @@
   },
   {
     "ContainingType": "Instagram.Controllers.ChatController",
+    "Method": "DeleteMessage",
+    "RelativePath": "api/Chat/delete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "messageid",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.ChatController",
     "Method": "AddReaction",
     "RelativePath": "api/Chat/reaction",
     "HttpMethod": "POST",
@@ -112,6 +128,177 @@
         "Name": "dto",
         "Type": "Instagram.Model.DTO.ReactionDto",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.RecentMessagesController",
+    "Method": "GetRecentMessages",
+    "RelativePath": "api/RecentMessages/recent-messages/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.RecentMessagesController",
+    "Method": "SaveRecentMessage",
+    "RelativePath": "api/RecentMessages/save-recent-message",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Instagram.Model.DTO.RecentMessageDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Instagram.Controllers.StoryController",
+    "Method": "AddStory",
+    "RelativePath": "api/Story/AddStory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Username",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "imageFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.StoryController",
+    "Method": "GetPersonalStories",
+    "RelativePath": "api/Story/GetPersonalStories/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.StoryController",
+    "Method": "GetStoriesByUser",
+    "RelativePath": "api/Story/GetStoriesByUser/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.StoryController",
+    "Method": "GetStoryViewers",
+    "RelativePath": "api/Story/GetStoryViewers/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.StoryController",
+    "Method": "IsStoryAvailable",
+    "RelativePath": "api/Story/IsStoryAvailable/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.StoryController",
+    "Method": "MarkAsSeen",
+    "RelativePath": "api/Story/seen",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.SeenDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.VideosController",
+    "Method": "GetVideoUrl",
+    "RelativePath": "api/Videos/{publicId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "publicId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.VideosController",
+    "Method": "UploadVideo",
+    "RelativePath": "api/Videos/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

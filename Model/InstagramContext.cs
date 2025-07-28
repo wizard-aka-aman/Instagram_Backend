@@ -27,6 +27,10 @@ namespace Instagram.Model
         public DbSet<Followers> Followers { get; set; }
         public DbSet<Saved> Saved { get; set; }
         public DbSet<ChatMessage> Messages { get; set; }
+        public DbSet<RecentMessages> RecentMessages { get; set; }
+        public DbSet<Story> Story { get; set; } 
+        public DbSet<StorySeen> StorySeen { get; set; }
+        public DbSet<CloudinaryDB> CloudinaryDB { get; set; }
 
 
     }

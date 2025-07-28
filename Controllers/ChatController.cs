@@ -30,9 +30,19 @@ namespace Instagram.Controllers
         [HttpGet("{groupName}/{reciver}")]
         public async Task<IActionResult> GetMessages(string groupName, string reciver)
         {
-            var messages = await _context.Messages.Where(e => e.GroupName == groupName && e.Sender == reciver || e.GroupName == reciver && e.Sender == groupName).ToListAsync();
+            var messages = await _context.Messages.Where(e => e.GroupName == groupName && e.Sender == reciver && !e.IsDeleted || e.GroupName == reciver && e.Sender == groupName && !e.IsDeleted).ToListAsync();
             //var messages1 = await _context.Messages.Where().ToListAsync();
             return Ok(messages);
+        }
+        [HttpPost("delete")]
+        public async Task<IActionResult> DeleteMessage([FromBody] int messageid)
+        {
+            var existingMessage = await _context.Messages.FindAsync(messageid);
+            if (existingMessage == null) return NotFound();
+            existingMessage.IsDeleted = true;
+            _context.Messages.Update(existingMessage);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpPost]

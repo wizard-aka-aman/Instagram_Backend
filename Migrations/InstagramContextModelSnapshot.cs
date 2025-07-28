@@ -34,6 +34,9 @@ namespace Instagram.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -51,6 +54,44 @@ namespace Instagram.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Instagram.Model.Tables.CloudinaryDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommentCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProfilePicture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CloudinaryDB");
                 });
 
             modelBuilder.Entity("Instagram.Model.Tables.Comments", b =>
@@ -191,6 +232,40 @@ namespace Instagram.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("Instagram.Model.Tables.RecentMessages", b =>
+                {
+                    b.Property<int>("RecentMessagesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecentMessagesId"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastMessageDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LoggedInUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RecentMessagesId");
+
+                    b.ToTable("RecentMessages");
+                });
+
             modelBuilder.Entity("Instagram.Model.Tables.Saved", b =>
                 {
                     b.Property<int>("SavedId")
@@ -214,6 +289,60 @@ namespace Instagram.Migrations
                     b.HasIndex("PostsPostId");
 
                     b.ToTable("Saved");
+                });
+
+            modelBuilder.Entity("Instagram.Model.Tables.Story", b =>
+                {
+                    b.Property<int>("StoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StoryId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpirationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StoryId");
+
+                    b.ToTable("Story");
+                });
+
+            modelBuilder.Entity("Instagram.Model.Tables.StorySeen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SeenAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SeenByUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.ToTable("StorySeen");
                 });
 
             modelBuilder.Entity("Instagram.Model.Tables.Users", b =>
@@ -301,6 +430,17 @@ namespace Instagram.Migrations
                         .IsRequired();
 
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Instagram.Model.Tables.StorySeen", b =>
+                {
+                    b.HasOne("Instagram.Model.Tables.Story", "Story")
+                        .WithMany()
+                        .HasForeignKey("StoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Story");
                 });
 
             modelBuilder.Entity("Instagram.Model.Tables.Posts", b =>

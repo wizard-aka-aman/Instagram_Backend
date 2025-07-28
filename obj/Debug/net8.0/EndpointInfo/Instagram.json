@@ -150,6 +150,40 @@
         }
       }
     },
+    "/api/Chat/delete": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Chat": {
       "post": {
         "tags": [
@@ -540,6 +574,59 @@
         }
       }
     },
+    "/api/RecentMessages/save-recent-message": {
+      "post": {
+        "tags": [
+          "RecentMessages"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecentMessageDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecentMessageDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecentMessageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/RecentMessages/recent-messages/{username}": {
+      "get": {
+        "tags": [
+          "RecentMessages"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Saved/getallsaved/{username}": {
       "get": {
         "tags": [
@@ -728,6 +815,163 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Story/GetStoriesByUser/{username}": {
+      "get": {
+        "tags": [
+          "Story"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Story/GetPersonalStories/{username}": {
+      "get": {
+        "tags": [
+          "Story"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Story/GetStoryViewers/{username}": {
+      "get": {
+        "tags": [
+          "Story"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Story/AddStory": {
+      "post": {
+        "tags": [
+          "Story"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Username": {
+                    "type": "string"
+                  },
+                  "imageFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Username": {
+                  "style": "form"
+                },
+                "imageFile": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Story/seen": {
+      "post": {
+        "tags": [
+          "Story"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeenDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeenDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Story/IsStoryAvailable/{username}": {
+      "get": {
+        "tags": [
+          "Story"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -941,6 +1185,60 @@
           }
         }
       }
+    },
+    "/api/Videos/upload": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Videos/{publicId}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "publicId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -981,6 +1279,9 @@
           "reaction": {
             "type": "string",
             "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1215,6 +1516,24 @@
         },
         "additionalProperties": false
       },
+      "RecentMessageDto": {
+        "type": "object",
+        "properties": {
+          "senderUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "receiverUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterDto": {
         "required": [
           "email",
@@ -1283,6 +1602,20 @@
         },
         "additionalProperties": false
       },
+      "SeenDto": {
+        "type": "object",
+        "properties": {
+          "storyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seenByUsername": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Users": {
         "required": [
           "email",
@@ -1299,6 +1632,7 @@
           "userName": {
             "maxLength": 50,
             "minLength": 5,
+            "pattern": "/^[A-Za-z0-9]+$/",
             "type": "string"
           },
           "passwordHash": {
@@ -1358,6 +1692,7 @@
             "format": "int32"
           },
           "userName": {
+            "pattern": "/^[A-Za-z0-9]+$/",
             "type": "string",
             "nullable": true
           },

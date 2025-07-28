@@ -9,5 +9,6 @@
         public DateTime SentAt { get; set; }
 
         public string? Reaction { get; set; } // Optional, used for Reaction
+        public bool IsDeleted { get; set; } = false; // Indicates if the message has been Deleted
     }
 }

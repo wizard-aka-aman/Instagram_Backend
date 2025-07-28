@@ -7,6 +7,9 @@ using Instagram.Model.PostsRepo;
 using Instagram.Model.FollowRepo;
 using Instagram.Model.SavedRepo;
 using Instagram.Model.Chat;
+using Instagram.Model.StoryRepo;
+using CloudinaryDotNet;
+using Instagram.Model.Cloudinary;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +33,7 @@ builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<ISavedRepository, SavedRepository>();
+builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 
 //JWT
 builder.Services.AddAuthentication(options =>
@@ -55,6 +59,18 @@ builder.Services.AddAuthentication(options =>
     };
 
 });
+//cloudinary configuration 
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
+builder.Services.AddSingleton(s =>
+{
+    var settings = builder.Configuration.GetSection("CloudinarySettings").Get<CloudinarySettings>();
+    Account account = new Account(settings.CloudName, settings.ApiKey, settings.ApiSecret);
+    return new Cloudinary(account);
+});
+
+
 // Add CORS policy 
 builder.Services.AddCors(options =>
 {
@@ -65,7 +81,7 @@ builder.Services.AddCors(options =>
             //policy.WithOrigins("https://wizardamansociety.netlify.app") // netilify's dev server
 
                .AllowAnyHeader()
-               .AllowAnyMethod()
+               .AllowAnyMethod() 
                .AllowCredentials();
         });
 });

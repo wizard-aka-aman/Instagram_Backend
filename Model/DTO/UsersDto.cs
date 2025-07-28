@@ -4,9 +4,9 @@ namespace Instagram.Model.DTO
 {
     public class UsersDto
     {
-        public int UsersId { get; set; } 
+        public int UsersId { get; set; }
 
-
+        [RegularExpression(@"/^[A-Za-z0-9]+$/", ErrorMessage = "cannot contain any special character and spaces")]
         public string UserName { get; set; }
 
 
