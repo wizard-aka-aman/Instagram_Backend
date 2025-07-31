@@ -14,5 +14,6 @@
         public string? ProfilePicture { get; set; }
         public string UserName { get; set; }
         public bool IsLikedLoggedInUser { get; set; } = false;
+        public bool IsLoggedInUserFollow { get; set; } = false;
     }
 }

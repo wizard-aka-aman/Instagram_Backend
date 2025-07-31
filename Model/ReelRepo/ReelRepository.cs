@@ -1,4 +1,5 @@
 ﻿using Instagram.Model.DTO;
+using Instagram.Model.FollowRepo;
 using Instagram.Model.Tables;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,11 @@ namespace Instagram.Model.ReelRepo
     public class ReelRepository : IReelRepository
     {
         private readonly InstagramContext _context;
-
-        public ReelRepository(InstagramContext context)
+        private readonly IFollowRepository _followRepository;
+        public ReelRepository(InstagramContext context , IFollowRepository followRepository)
         {
             _context = context;
+            _followRepository = followRepository;
         }
         public async Task<bool?> CommentReel(CommentDtoWithPublicid dto)
         {
@@ -160,8 +162,7 @@ namespace Instagram.Model.ReelRepo
         {
 
             // Fetch the post by ID 
-            List<CloudinaryDB> reel = await _context.CloudinaryDB
-               .ToListAsync();
+            List<CloudinaryDB> reel = _context.CloudinaryDB.OrderBy(r => Guid.NewGuid()).Take(5).ToList();   
 
             if (reel == null || reel.Count == 0)
                 return new List<DisplayReelDto>();
@@ -184,6 +185,7 @@ namespace Instagram.Model.ReelRepo
                     Publicid = r.PublicId,
                     ReelId = r.Id,
                      IsLikedLoggedInUser = likes.Any(l => l.UserName == loggedInUser),
+                     IsLoggedInUserFollow  = await _followRepository.IsFollowingAsync(loggedInUser, r.UserName),
                     Comments = comment.Select(c => new ReelCommentDto
                     {
                         CommentedAt = c.CommentedAt,
