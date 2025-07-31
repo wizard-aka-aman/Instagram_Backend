@@ -37,5 +37,29 @@ namespace Instagram.Controllers
         {
             return await _savedRepository.IsSaved(username,postId);
         }
+
+        //saved reels
+
+
+        [HttpGet("getallsavedreels/{username}")]
+        public async Task<List<SavedReel>?> GetAllSavedreels(string username)
+        {
+            return await _savedRepository.GetAllSavedReel(username);
+        }
+        [HttpPost("addtosavedreels")]
+        public async Task<bool?> AddSavedreels([FromBody] SavedReelDto dto)
+        {
+            return await _savedRepository.AddSavedReel(dto.UserName, dto.publicid);
+        }
+        [HttpPost("removesavedreels")]
+        public async Task<bool?> RemoveSavedreels([FromBody] SavedReelDto dto)
+        {
+            return await _savedRepository.RemoveSavedReel(dto.UserName, dto.publicid);
+        }
+        [HttpGet("issavedreels/{username}/{publicid}")]
+        public async Task<bool?> IsSavedreels(string username, string publicid)
+        {
+            return await _savedRepository.IsSavedReel(username, publicid);
+        }
     }
 }

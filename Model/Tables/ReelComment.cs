@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Instagram.Model.Tables
 {
-    public class Comments
+    public class ReelComment
     {
         [Key]
-        public int CommentId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(300)]
@@ -14,12 +13,11 @@ namespace Instagram.Model.Tables
 
         public DateTime CommentedAt { get; set; } = DateTime.Now;
 
-        public int PostId { get; set; }
+        public string publicId { get; set; }
         //public virtual Posts Post { get; set; }
 
         public string UserName { get; set; }
         public string? ProfilePicture { get; set; }
         //public virtual Users User { get; set; }
     }
-
 }

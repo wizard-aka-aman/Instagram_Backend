@@ -106,5 +106,99 @@ namespace Instagram.Model.SavedRepo
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool?> AddSavedReel(string username, string publicid)
+        {
+            if (string.IsNullOrEmpty(username) || publicid == "")
+            {
+                return false;
+            }
+            Users user = await _context.Users.FirstOrDefaultAsync(e => e.UserName == username);
+            if (user == null)
+            {
+                return false;
+            }
+            CloudinaryDB savedReel= await _context.CloudinaryDB.FirstOrDefaultAsync(e => e.PublicId == publicid);
+            if (savedReel == null)
+            {
+                return false;
+            }
+            SavedReel isAlreadyPresent =await _context.SavedReel.Include(e => e.CloudinaryDB).FirstOrDefaultAsync(e => e.UserName == username && e.CloudinaryDB.PublicId== publicid);
+            if (isAlreadyPresent != null) { 
+                return false;
+            }
+            SavedReel saved = new SavedReel
+            {
+                CloudinaryDB = savedReel,
+                SavedAt = DateTime.Now,
+                UserName = username,
+            };
+            _context.SavedReel.Add(saved);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<SavedReel>?> GetAllSavedReel(string username)
+        {
+            Users user = await _context.Users.FirstOrDefaultAsync(e => e.UserName == username);
+            if(user == null)
+            {
+                return null;    
+            }
+           return await _context.SavedReel.Include(e => e.CloudinaryDB)
+                   .Where(p => p.UserName == username).OrderByDescending(e => e.SavedAt)
+                   .ToListAsync();
+        }
+
+        public async  Task<bool?> IsSavedReel(string username, string publicid)
+        {
+            //if (string.IsNullOrEmpty(username) || postId <= 0)
+            //{
+            //    return null;
+            //}
+            //Users user = await _context.Users.FirstOrDefaultAsync(e => e.UserName == username);
+            //if (user == null)
+            //{
+            //    return null;
+            //}
+            //Posts savedPosts = await _context.Posts.FirstOrDefaultAsync(e => e.PostId == postId);
+            //if (savedPosts == null)
+            //{
+            //    return null;
+            //}
+
+            SavedReel isAlreadyPresent = await _context.SavedReel.FirstOrDefaultAsync(e => e.UserName == username && e.CloudinaryDB.PublicId== publicid);
+            if (isAlreadyPresent == null)
+            {
+                return false;
+            }
+            return true;  
+        }
+
+        public async Task<bool?> RemoveSavedReel(string username, string publicid)
+        {
+            if (string.IsNullOrEmpty(username) || publicid== "")
+            {
+                return false;
+            }
+            Users user = await _context.Users.FirstOrDefaultAsync(e => e.UserName == username);
+            if (user == null)
+            {
+                return false;
+            }
+            SavedReel savedReel = await _context.SavedReel.Include(e=> e.CloudinaryDB).FirstOrDefaultAsync(e => e.CloudinaryDB.PublicId == publicid);
+            if (savedReel == null)
+            {
+                return false;
+            }
+
+            SavedReel isAlreadyPresent = await _context.SavedReel.Include(e => e.CloudinaryDB).FirstOrDefaultAsync(e => e.UserName == username && e.CloudinaryDB.PublicId == publicid);
+            if (isAlreadyPresent == null)
+            {
+                return false;
+            }
+            _context.SavedReel.Remove(isAlreadyPresent);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

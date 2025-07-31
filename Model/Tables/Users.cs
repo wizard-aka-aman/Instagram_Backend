@@ -10,7 +10,8 @@ namespace Instagram.Model.Tables
 
         [Required(ErrorMessage = "UserName is required")]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "User name must be between 3 and 50 characters")]
-        [RegularExpression(@"/^[A-Za-z0-9]+$/" , ErrorMessage ="cannot contain any special character and spaces")]
+        [RegularExpression(@"^[A-Za-z0-9_]+$", ErrorMessage = "Username can only contain letters, numbers, and underscores.")]
+
         public string  UserName { get; set; }
 
 

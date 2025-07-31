@@ -31,7 +31,9 @@ namespace Instagram.Model
         public DbSet<Story> Story { get; set; } 
         public DbSet<StorySeen> StorySeen { get; set; }
         public DbSet<CloudinaryDB> CloudinaryDB { get; set; }
-
-
+        public DbSet<ReelLike> ReelLike { get; set; }
+        public DbSet<ReelComment> ReelComment { get; set; }
+        public DbSet<SavedReel> SavedReel { get; set; }
+         
     }
 }

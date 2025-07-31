@@ -10,6 +10,7 @@ using Instagram.Model.Chat;
 using Instagram.Model.StoryRepo;
 using CloudinaryDotNet;
 using Instagram.Model.Cloudinary;
+using Instagram.Model.ReelRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<ISavedRepository, SavedRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
+builder.Services.AddScoped<IReelRepository, ReelRepository>();
 
 //JWT
 builder.Services.AddAuthentication(options =>

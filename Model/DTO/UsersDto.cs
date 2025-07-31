@@ -6,7 +6,8 @@ namespace Instagram.Model.DTO
     {
         public int UsersId { get; set; }
 
-        [RegularExpression(@"/^[A-Za-z0-9]+$/", ErrorMessage = "cannot contain any special character and spaces")]
+        [RegularExpression(@"^[A-Za-z0-9_]+$", ErrorMessage = "Username can only contain letters, numbers, and underscores.")]
+
         public string UserName { get; set; }
 
 

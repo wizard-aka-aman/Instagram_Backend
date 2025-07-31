@@ -9,11 +9,12 @@
         
         public string UserName { get; set; }
 
-        public int LikeCount { get; set; }
+        public int LikeCount { get; set; } 
 
         public int CommentCount { get; set; }
         
-        public string ProfilePicture { set; get; }
+        public string? ProfilePicture { set; get; }
+        public string? Description { set; get; }
 
 
     }

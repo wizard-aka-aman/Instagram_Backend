@@ -13,7 +13,7 @@ namespace Instagram.Model.UsersRepo
             _context = context;
         }
 
-        public async Task<UsersDto?> EditUsersByUserName(string username, UsersDto dto)
+        public async Task<UsersDto?> EditUsersByUserName(string username, EditUserDto dto)
         {
             Users users = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
             if (users == null)
@@ -22,10 +22,8 @@ namespace Instagram.Model.UsersRepo
             }
             else
             {
-                users.Bio = dto.Bio;
-                users.Email = dto.Email;
-                users.FullName = dto.FullName;
-                users.UserName = dto.UserName;
+                users.Bio = dto.Bio; 
+                users.FullName = dto.FullName; 
                 users.Gender = dto.Gender;
                 _context.Users.Update(users);
                 await _context.SaveChangesAsync();
@@ -36,8 +34,7 @@ namespace Instagram.Model.UsersRepo
                     FullName = users.FullName,
                     UserName = users.UserName,
                     UsersId = users.UsersId,
-                    Gender = users.Gender,
-                    ProfilePicture =    dto.ProfilePicture
+                    Gender = users.Gender, 
                 };
                 return updatedUserDto;
             }

@@ -129,7 +129,7 @@ namespace Instagram.Model.PostsRepo
                     UserName = l.UserName,
                     ProfilePicture =l.ProfilePicture
                 }).OrderByDescending(e => e.LikedAt).ToList(),
-                ProfilePicture =    Convert.ToBase64String(user.ProfilePicture),
+                ProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture) : null,
                 UserName = user.UserName
             };
             return displayPost;

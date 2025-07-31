@@ -273,15 +273,95 @@
   },
   {
     "ContainingType": "Instagram.Controllers.VideosController",
-    "Method": "GetVideoUrl",
-    "RelativePath": "api/Videos/{publicId}",
+    "Method": "CommentReel",
+    "RelativePath": "api/Videos/CommentReel",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.CommentDtoWithPublicid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.VideosController",
+    "Method": "GetAllFive",
+    "RelativePath": "api/Videos/GetAllFive/{loggedInUser}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "publicId",
+        "Name": "loggedInUser",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.VideosController",
+    "Method": "GetReelByPublicid",
+    "RelativePath": "api/Videos/GetReelByPublicid/{publicid}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "publicid",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.VideosController",
+    "Method": "GetReelByUsername",
+    "RelativePath": "api/Videos/GetReelByUsername/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.VideosController",
+    "Method": "LikeReel",
+    "RelativePath": "api/Videos/LikeReel",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.SendDataReel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Instagram.Controllers.VideosController",
+    "Method": "UnLikeReel",
+    "RelativePath": "api/Videos/UnLikeReel",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.SendDataReel",
         "IsRequired": true
       }
     ],
@@ -298,6 +378,16 @@
       {
         "Name": "file",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "description",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -527,6 +617,32 @@
   },
   {
     "ContainingType": "Instagram.Controllers.SavedController",
+    "Method": "AddSavedreels",
+    "RelativePath": "Saved/addtosavedreels",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.SavedReelDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Instagram.Controllers.SavedController",
     "Method": "GetAllSaved",
     "RelativePath": "Saved/getallsaved/{username}",
     "HttpMethod": "GET",
@@ -542,6 +658,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[Instagram.Model.Tables.Saved, Instagram, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Instagram.Controllers.SavedController",
+    "Method": "GetAllSavedreels",
+    "RelativePath": "Saved/getallsavedreels/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Instagram.Model.Tables.SavedReel, Instagram, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -584,6 +726,37 @@
   },
   {
     "ContainingType": "Instagram.Controllers.SavedController",
+    "Method": "IsSavedreels",
+    "RelativePath": "Saved/issavedreels/{username}/{publicid}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "publicid",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Instagram.Controllers.SavedController",
     "Method": "RemoveSaved",
     "RelativePath": "Saved/removesaved",
     "HttpMethod": "POST",
@@ -593,6 +766,32 @@
       {
         "Name": "dto",
         "Type": "Instagram.Model.DTO.SavedDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Instagram.Controllers.SavedController",
+    "Method": "RemoveSavedreels",
+    "RelativePath": "Saved/removesavedreels",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Instagram.Model.DTO.SavedReelDto",
         "IsRequired": true
       }
     ],
@@ -696,7 +895,7 @@
       },
       {
         "Name": "dto",
-        "Type": "Instagram.Model.DTO.UsersDto",
+        "Type": "Instagram.Model.DTO.EditUserDto",
         "IsRequired": true
       }
     ],

@@ -6,6 +6,7 @@
     {
         [Required(ErrorMessage = "UserName is required")]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "User name must be between 5 and 50 characters")]
+        [RegularExpression(@"^[A-Za-z0-9_]+$", ErrorMessage = "Username can only contain letters, numbers, and underscores.")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Password is required")]

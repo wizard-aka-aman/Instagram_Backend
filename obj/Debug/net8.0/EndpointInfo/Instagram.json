@@ -819,6 +819,197 @@
         }
       }
     },
+    "/Saved/getallsavedreels/{username}": {
+      "get": {
+        "tags": [
+          "Saved"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SavedReel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SavedReel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SavedReel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Saved/addtosavedreels": {
+      "post": {
+        "tags": [
+          "Saved"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedReelDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedReelDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedReelDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Saved/removesavedreels": {
+      "post": {
+        "tags": [
+          "Saved"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedReelDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedReelDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedReelDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Saved/issavedreels/{username}/{publicid}": {
+      "get": {
+        "tags": [
+          "Saved"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "publicid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Story/GetStoriesByUser/{username}": {
       "get": {
         "tags": [
@@ -1017,17 +1208,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersDto"
+                "$ref": "#/components/schemas/EditUserDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersDto"
+                "$ref": "#/components/schemas/EditUserDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersDto"
+                "$ref": "#/components/schemas/EditUserDto"
               }
             }
           }
@@ -1200,11 +1391,23 @@
                   "file": {
                     "type": "string",
                     "format": "binary"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
                   }
                 }
               },
               "encoding": {
                 "file": {
+                  "style": "form"
+                },
+                "username": {
+                  "style": "form"
+                },
+                "description": {
                   "style": "form"
                 }
               }
@@ -1218,14 +1421,151 @@
         }
       }
     },
-    "/api/Videos/{publicId}": {
+    "/api/Videos/GetReelByUsername/{username}": {
       "get": {
         "tags": [
           "Videos"
         ],
         "parameters": [
           {
-            "name": "publicId",
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Videos/CommentReel": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentDtoWithPublicid"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentDtoWithPublicid"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentDtoWithPublicid"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Videos/LikeReel": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDataReel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDataReel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDataReel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Videos/UnLikeReel": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDataReel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDataReel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDataReel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Videos/GetReelByPublicid/{publicid}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "publicid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Videos/GetAllFive/{loggedInUser}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "loggedInUser",
             "in": "path",
             "required": true,
             "schema": {
@@ -1286,6 +1626,48 @@
         },
         "additionalProperties": false
       },
+      "CloudinaryDB": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "publicId": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "likeCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "commentCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "profilePicture": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CommentDtoWithPostId": {
         "type": "object",
         "properties": {
@@ -1300,6 +1682,24 @@
           "postId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommentDtoWithPublicid": {
+        "type": "object",
+        "properties": {
+          "commentText": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "publicid": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1350,6 +1750,30 @@
             "nullable": true
           },
           "profilePicture": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EditUserDto": {
+        "required": [
+          "fullName"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "bio": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
             "type": "string",
             "nullable": true
           }
@@ -1546,6 +1970,7 @@
           "userName": {
             "maxLength": 50,
             "minLength": 5,
+            "pattern": "^[A-Za-z0-9_]+$",
             "type": "string"
           },
           "password": {
@@ -1602,6 +2027,41 @@
         },
         "additionalProperties": false
       },
+      "SavedReel": {
+        "type": "object",
+        "properties": {
+          "savedId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cloudinaryDB": {
+            "$ref": "#/components/schemas/CloudinaryDB"
+          },
+          "savedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SavedReelDto": {
+        "type": "object",
+        "properties": {
+          "publicid": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SeenDto": {
         "type": "object",
         "properties": {
@@ -1610,6 +2070,20 @@
             "format": "int32"
           },
           "seenByUsername": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SendDataReel": {
+        "type": "object",
+        "properties": {
+          "publicid": {
+            "type": "string",
+            "nullable": true
+          },
+          "likedBy": {
             "type": "string",
             "nullable": true
           }
@@ -1632,7 +2106,7 @@
           "userName": {
             "maxLength": 50,
             "minLength": 5,
-            "pattern": "/^[A-Za-z0-9]+$/",
+            "pattern": "^[A-Za-z0-9_]+$",
             "type": "string"
           },
           "passwordHash": {
@@ -1669,55 +2143,6 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "followersCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "followingCount": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UsersDto": {
-        "required": [
-          "fullName"
-        ],
-        "type": "object",
-        "properties": {
-          "usersId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userName": {
-            "pattern": "/^[A-Za-z0-9]+$/",
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "fullName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "bio": {
-            "maxLength": 200,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "profilePicture": {
-            "type": "string",
-            "nullable": true
-          },
-          "gender": {
-            "type": "string",
-            "nullable": true
           },
           "followersCount": {
             "type": "integer",

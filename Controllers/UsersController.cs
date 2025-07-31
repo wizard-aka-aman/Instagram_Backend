@@ -32,7 +32,7 @@ namespace Instagram.Controllers
             return Ok(user);
         }
         [HttpPut("put/{username}")]
-        public async Task<IActionResult> EditUserByUserName(string username, [FromBody] UsersDto dto)
+        public async Task<IActionResult> EditUserByUserName(string username, [FromBody] EditUserDto dto)
         {
             if (string.IsNullOrEmpty(username) || dto == null)
             {

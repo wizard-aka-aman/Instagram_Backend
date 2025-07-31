@@ -4,6 +4,7 @@ using Instagram.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Instagram.Migrations
 {
     [DbContext(typeof(InstagramContext))]
-    partial class InstagramContextModelSnapshot : ModelSnapshot
+    [Migration("20250729045751_modifiy reel like and commment")]
+    partial class modifiyreellikeandcommment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -352,31 +355,6 @@ namespace Instagram.Migrations
                     b.ToTable("Saved");
                 });
 
-            modelBuilder.Entity("Instagram.Model.Tables.SavedReel", b =>
-                {
-                    b.Property<int>("SavedId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SavedId"));
-
-                    b.Property<int>("CloudinaryDBId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SavedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SavedId");
-
-                    b.HasIndex("CloudinaryDBId");
-
-                    b.ToTable("SavedReel");
-                });
-
             modelBuilder.Entity("Instagram.Model.Tables.Story", b =>
                 {
                     b.Property<int>("StoryId")
@@ -516,17 +494,6 @@ namespace Instagram.Migrations
                         .IsRequired();
 
                     b.Navigation("Posts");
-                });
-
-            modelBuilder.Entity("Instagram.Model.Tables.SavedReel", b =>
-                {
-                    b.HasOne("Instagram.Model.Tables.CloudinaryDB", "CloudinaryDB")
-                        .WithMany()
-                        .HasForeignKey("CloudinaryDBId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CloudinaryDB");
                 });
 
             modelBuilder.Entity("Instagram.Model.Tables.StorySeen", b =>

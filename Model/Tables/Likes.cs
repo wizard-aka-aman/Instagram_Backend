@@ -15,6 +15,6 @@ namespace Instagram.Model.Tables
         public string? ProfilePicture{ get; set; } 
         //public virtual Users User { get; set; }
 
-        public DateTime LikedAt { get; set; } = DateTime.UtcNow;
+        public DateTime LikedAt { get; set; } = DateTime.Now;
     }
 }
