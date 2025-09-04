@@ -8,6 +8,6 @@ namespace Instagram.Model.Tables
         public int FollowerId { get; set; }
         public string UserName { get; set; } // The username of the follower
         public string FollowerUserName { get; set; } // The username of the user being followed
-        public DateTime FollowedAt { get; set; } = DateTime.UtcNow; // Timestamp of when the follow action occurred
+        public DateTime FollowedAt { get; set; } = DateTime.Now; // Timestamp of when the follow action occurred
     }
 }

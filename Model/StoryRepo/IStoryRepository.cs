@@ -12,5 +12,6 @@ namespace Instagram.Model.StoryRepo
         Task<bool> MarkStoryAsSeen(int storyId, string seenBy);
         Task<List<StorySeen>> GetStoryViewers(string username);
         Task<DisplayStoryWithGroup?> IsStoryAvailable(string username);
+        Task<List<DisplayPostDto>> DisplayPostHome(string username);
     }
 }

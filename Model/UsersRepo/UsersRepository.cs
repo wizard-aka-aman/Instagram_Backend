@@ -25,6 +25,7 @@ namespace Instagram.Model.UsersRepo
                 users.Bio = dto.Bio; 
                 users.FullName = dto.FullName; 
                 users.Gender = dto.Gender;
+                users.IsPublic = dto.IsPublic;
                 _context.Users.Update(users);
                 await _context.SaveChangesAsync();
                 UsersDto updatedUserDto = new UsersDto
@@ -35,6 +36,7 @@ namespace Instagram.Model.UsersRepo
                     UserName = users.UserName,
                     UsersId = users.UsersId,
                     Gender = users.Gender, 
+                    IsPublic = users.IsPublic,
                 };
                 return updatedUserDto;
             }
@@ -61,6 +63,8 @@ namespace Instagram.Model.UsersRepo
         public async Task<UsersDto?> GetUserByUserName(string username)
         {
             Users user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            var followcount = _context.Followers.Count(e => e.FollowerUserName == username);
+            var followingcount = _context.Followers.Count(e => e.UserName == username);
             if (user == null)
             {
                 return null;
@@ -76,8 +80,9 @@ namespace Instagram.Model.UsersRepo
                     UsersId = user.UsersId,
                     ProfilePicture = user.ProfilePicture != null ?  Convert.ToBase64String(user.ProfilePicture) : null,
                     Gender = user.Gender,
-                    FollowersCount = user.FollowersCount,
-                    FollowingCount = user.FollowingCount
+                    FollowersCount = followcount,
+                    FollowingCount = followingcount,
+                    IsPublic = user.IsPublic
                     
                 };
                 return userDto;
@@ -104,7 +109,8 @@ namespace Instagram.Model.UsersRepo
                     UserName = user.UserName,
                     UsersId = user.UsersId,
                     ProfilePicture = user.ProfilePicture != null ?Convert.ToBase64String(user.ProfilePicture) : null,
-                    Gender = user.Gender
+                    Gender = user.Gender,
+                    IsPublic= user.IsPublic
                 };
                 return true;
             }

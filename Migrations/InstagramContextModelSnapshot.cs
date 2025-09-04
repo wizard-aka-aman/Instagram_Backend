@@ -187,6 +187,53 @@ namespace Instagram.Migrations
                     b.ToTable("Likes");
                 });
 
+            modelBuilder.Entity("Instagram.Model.Tables.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LoggedInUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NotificationText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PostId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("SeenAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("reelIdId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId1");
+
+                    b.HasIndex("reelIdId");
+
+                    b.ToTable("Notification");
+                });
+
             modelBuilder.Entity("Instagram.Model.Tables.Posts", b =>
                 {
                     b.Property<int>("PostId")
@@ -327,6 +374,36 @@ namespace Instagram.Migrations
                     b.ToTable("ReelLike");
                 });
 
+            modelBuilder.Entity("Instagram.Model.Tables.Requested", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsReqAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfilePictureOfReqFrom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserNameOfReqFrom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserNameOfReqTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Requested");
+                });
+
             modelBuilder.Entity("Instagram.Model.Tables.Saved", b =>
                 {
                     b.Property<int>("SavedId")
@@ -464,6 +541,9 @@ namespace Instagram.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsPublic")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -494,6 +574,21 @@ namespace Instagram.Migrations
                     b.HasOne("Instagram.Model.Tables.Posts", null)
                         .WithMany("Likes")
                         .HasForeignKey("PostsPostId");
+                });
+
+            modelBuilder.Entity("Instagram.Model.Tables.Notification", b =>
+                {
+                    b.HasOne("Instagram.Model.Tables.Posts", "PostId")
+                        .WithMany()
+                        .HasForeignKey("PostId1");
+
+                    b.HasOne("Instagram.Model.Tables.CloudinaryDB", "reelId")
+                        .WithMany()
+                        .HasForeignKey("reelIdId");
+
+                    b.Navigation("PostId");
+
+                    b.Navigation("reelId");
                 });
 
             modelBuilder.Entity("Instagram.Model.Tables.Posts", b =>

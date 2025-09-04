@@ -38,9 +38,11 @@ namespace Instagram.Model.Tables
 
         public string? Gender { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public int FollowersCount { get; set; } = 0;
         public int FollowingCount { get; set; } = 0;
+
+        public bool? IsPublic { get; set; } = true;
         //public ICollection<string>? LikedPost { get; set; } // Navigation property to Posts table
     }
 }

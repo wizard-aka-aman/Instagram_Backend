@@ -14,6 +14,7 @@ namespace Instagram.Model.DTO
         public string? Bio { get; set; }
  
         public string? Gender { get; set; }
-         
+        public bool? IsPublic { get; set; }
+
     }
 }

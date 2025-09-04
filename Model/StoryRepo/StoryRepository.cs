@@ -2,6 +2,7 @@
 using Instagram.Model.DTO;
 using Instagram.Model.Tables;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace Instagram.Model.StoryRepo
 {
@@ -260,5 +261,105 @@ namespace Instagram.Model.StoryRepo
                 DisplayStories = displayStories
             };
         }
+
+        public async Task<List<DisplayPostDto>> DisplayPostHome(string username)
+        {
+            Random rand = new Random();
+            List<DisplayPostDto> displayPostDtos = new List<DisplayPostDto>();
+
+            // Check if the user exists
+            Users user = await _context.Users.FirstOrDefaultAsync(e => e.UserName == username);
+            if (user == null)
+            {
+                return null;
+            }
+
+            // Find all followings
+            List<DisplayUserFollower> displayFollowers = new List<DisplayUserFollower>();
+
+            List<Followers> users = await _context.Followers.Where(e => e.UserName == username).ToListAsync();
+
+            foreach (var userr in users)
+            {
+                Users findedUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userr.FollowerUserName);
+                if (findedUser != null)
+                {
+                    DisplayUserFollower duf = new DisplayUserFollower()
+                    {
+                        FullName = findedUser.FullName,
+                        UserName = findedUser.UserName,
+                        ProfilePicture = findedUser.ProfilePicture != null ? Convert.ToBase64String(findedUser.ProfilePicture) : null
+                    };
+                    displayFollowers.Add(duf);
+                }
+            }
+
+            // Flat list of posts
+            List<Posts> allPosts = new List<Posts>();
+
+            foreach (var following in displayFollowers)
+            {
+                // Per user only latest 2 posts
+                var posts = await _context.Posts
+                    .Include(p => p.User)
+                    .Where(p => p.User.UserName == following.UserName)
+                    .OrderByDescending(p => p.CreatedAt)
+   // 👈 limit har user ke liye
+                    .ToListAsync();
+
+                allPosts.AddRange(posts);
+            }
+
+            // Shuffle the combined posts (randomize order)
+            allPosts = allPosts
+     .OrderByDescending(p => p.CreatedAt.AddMinutes(rand.Next(-30, 30)))
+     .ToList();
+
+
+            // Convert to DTOs
+            foreach (var post in allPosts)
+            {
+                var comments = await _context.Comments
+                    .Where(c => c.PostId == post.PostId)
+                    .OrderByDescending(c => c.CommentedAt)
+                    .ToListAsync();
+
+                var likes = await _context.Likes
+                    .Where(l => l.PostId == post.PostId)
+                    .OrderByDescending(l => l.LikedAt)
+                    .ToListAsync();
+
+                DisplayPostDto displayPost = new DisplayPostDto
+                {
+                    Caption = post.Caption,
+                    CreatedAt = post.CreatedAt,
+                    ImageUrl = post.ImageUrl,
+                    PostId = post.PostId,
+                    Comments = comments.Select(c => new CommentDto
+                    {
+                        CommentedAt = c.CommentedAt,
+                        CommentText = c.CommentText,
+                        UserName = c.UserName,
+                        ProfilePicture = c.ProfilePicture
+                    }).Take(2).ToList(),
+                    LikesCount = post.LikesCount,
+                    CommentsCount = post.CommentsCount,
+                    Likes = likes.Select(l => new LikeDto
+                    {
+                        LikedAt = l.LikedAt,
+                        UserName = l.UserName,
+                        ProfilePicture = l.ProfilePicture
+                    }).ToList(),
+                    ProfilePicture = post.User.ProfilePicture != null ? Convert.ToBase64String(post.User.ProfilePicture) : null,
+                    UserName = post.User.UserName,
+                    IsSaved =  (await _context.Saved.FirstOrDefaultAsync(e => e.UserName == username && e.Posts.PostId == post.PostId) == null)? false : true
+            };
+
+                displayPostDtos.Add(displayPost);
+            }
+
+            return displayPostDtos;
+        }
+
     }
 }

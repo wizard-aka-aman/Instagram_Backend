@@ -64,7 +64,7 @@ namespace Instagram.Model.PostsRepo
                 ImageUrl = img,
                 UserId = user.UsersId,
                 User = user, // Set the user reference
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             };
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
@@ -99,7 +99,7 @@ namespace Instagram.Model.PostsRepo
                 return null; // User does not exist
             }
             // Fetch the post by ID 
-            Posts posts = await _context.Posts
+            Posts posts = await _context.Posts.Include(e => e.User)
                .FirstOrDefaultAsync(p => p.PostId == postId && user.UserName == username);
             if (posts == null)
             {
@@ -129,8 +129,8 @@ namespace Instagram.Model.PostsRepo
                     UserName = l.UserName,
                     ProfilePicture =l.ProfilePicture
                 }).OrderByDescending(e => e.LikedAt).ToList(),
-                ProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture) : null,
-                UserName = user.UserName
+                ProfilePicture = posts.User.ProfilePicture != null ? Convert.ToBase64String(posts.User.ProfilePicture) : null,
+                UserName = posts.User.UserName
             };
             return displayPost;
         }
@@ -171,10 +171,15 @@ namespace Instagram.Model.PostsRepo
                 return false; // User does not exist
             }
 
-            Posts post = await _context.Posts.FirstOrDefaultAsync(e => e.PostId == postId);
+            Posts post = await _context.Posts.Include(e=> e.User).FirstOrDefaultAsync(e => e.PostId == postId);
             if (post == null)
             {
                 return false; // Post does not exist
+            }
+            var noti = _context.Notification.Where(e => e.LoggedInUserName == user.UserName && e.UserName == post.User.UserName && e.PostId.PostId == postId).ToList();
+            if (noti.Any())
+            {
+                _context.Notification.RemoveRange(noti);
             }
 
             // Check if the user has already liked the post
@@ -188,7 +193,7 @@ namespace Instagram.Model.PostsRepo
                     PostId = post.PostId,
                     ProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture):null,
                     UserName = user.UserName,
-                    LikedAt = DateTime.UtcNow
+                    LikedAt = DateTime.Now
                 };
                 _context.Likes.Add(like);
                 _context.Posts.Update(post);

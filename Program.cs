@@ -11,6 +11,9 @@ using Instagram.Model.StoryRepo;
 using CloudinaryDotNet;
 using Instagram.Model.Cloudinary;
 using Instagram.Model.ReelRepo;
+using Instagram.Model.NotificationRepo;
+using Instagram.Model;
+using Instagram.Model.RequestedRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +39,8 @@ builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<ISavedRepository, SavedRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<IReelRepository, ReelRepository>();
-
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IRequestedRepository, RequestedRepository>();
 //JWT
 builder.Services.AddAuthentication(options =>
 {
@@ -58,9 +62,10 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true
 
-    };
+    }; 
 
 });
+
 //cloudinary configuration 
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
@@ -100,9 +105,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
-
+app.MapHub<NotificationHub>("/hubs/notification");
 app.Run();

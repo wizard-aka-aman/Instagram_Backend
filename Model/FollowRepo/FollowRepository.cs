@@ -24,6 +24,16 @@ namespace Instagram.Model.FollowRepo
             {
                 return false; // following user does not exist
             }
+            var noti = _context.Notification.Where(e => e.LoggedInUserName == user.UserName && e.UserName == followingUser.UserName && e.NotificationText == "started following you.").ToList();
+            if (noti.Any()) {
+                    _context.Notification.RemoveRange(noti);
+            }
+            var noti2 = _context.Notification.Where(e => e.LoggedInUserName == user.UserName &&
+                                                    e.UserName == followingUser.UserName &&
+                                                    e.NotificationText == "Requested to follow you.").ToList();
+            if (noti2.Any()) {
+                _context.Notification.RemoveRange(noti2);
+            }
             Followers existingFollow = await _context.Followers
                 .FirstOrDefaultAsync(f => f.UserName == followerUsername && f.FollowerUserName == followingUsername);
             if (existingFollow != null)
@@ -132,6 +142,9 @@ namespace Instagram.Model.FollowRepo
             {
                 return false; // not following
             }
+            List<Requested> req = _context.Requested.Where(e => e.UserNameOfReqFrom == followerUsername && e.UserNameOfReqTo == followingUsername).ToList();
+            if(req.Count>=1)
+            _context.Requested.Remove(req[0]);
             // Decrement following count for the follower
             user.FollowingCount--;
             // Decrement follower count for the followed user

@@ -34,6 +34,8 @@ namespace Instagram.Model
         public DbSet<ReelLike> ReelLike { get; set; }
         public DbSet<ReelComment> ReelComment { get; set; }
         public DbSet<SavedReel> SavedReel { get; set; }
+        public DbSet<Notification> Notification { get; set; }
+        public DbSet<Requested> Requested { get; set; }
          
     }
 }

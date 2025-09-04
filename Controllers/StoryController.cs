@@ -86,6 +86,17 @@ namespace Instagram.Controllers
 
             return Ok(story);
         }
+        [HttpGet("DisplayPostHome/{username}")]
+        public async Task<IActionResult> DisplayPostHome(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return BadRequest(new { message = "Username cannot be null or empty." });
+            }
+            var story = await _storyRepository.DisplayPostHome(username);
+
+            return Ok(story);
+        }
 
 
 

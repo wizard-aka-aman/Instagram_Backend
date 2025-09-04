@@ -58,5 +58,11 @@ namespace Instagram.Model.Chat
             await Clients.Group(groupName).SendAsync("RecieveUnSend", messageId);
         }
 
+        // Broadcast to all
+        public async Task SendMessageToAll(string groupname, string message)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", groupname, message, DateTime.UtcNow);
+        }
+
     }
 }
