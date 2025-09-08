@@ -15,5 +15,10 @@
         public string UserName { get; set; }
         public bool IsLikedLoggedInUser { get; set; } = false;
         public bool IsLoggedInUserFollow { get; set; } = false;
+        public bool? IsPublic { get; set; } = false;
+        public bool IsRequested { get; set; } = false;
+        public bool IsSeenUserFollwingMeVariable { get; set; } = false;
+        public bool AlreadyFollowing { get; set; } = false;
+
     }
 }

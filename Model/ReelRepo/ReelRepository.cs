@@ -202,7 +202,11 @@ namespace Instagram.Model.ReelRepo
                         ProfilePicture = l.ProfilePicture
                     }).OrderByDescending(e => e.LikedAt).ToList(),
                     ProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture) : null,
-                    UserName = user.UserName
+                    UserName = user.UserName,
+                    IsPublic = user.IsPublic,
+                    IsRequested = _context.Requested.Any(e => e.UserNameOfReqFrom == loggedInUser && e.UserNameOfReqTo == user.UserName),
+                    IsSeenUserFollwingMeVariable = await _followRepository.IsFollowingAsync(user.UserName, loggedInUser),
+                    AlreadyFollowing = await _followRepository.IsFollowingAsync(loggedInUser, user.UserName)
                 };
                 displayReels.Add(displayReel);
             }
